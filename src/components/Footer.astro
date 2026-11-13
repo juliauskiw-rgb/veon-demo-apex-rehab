@@ -1,0 +1,48 @@
+---
+import FutureLink from "./FutureLink.astro";
+import logo from "../assets/logo-apex.svg";
+import { links, PHONE_DISPLAY, address, hours, SOON } from "../data/clinic";
+const year = new Date().getFullYear();
+---
+<footer class="foot">
+  <div class="container foot__grid">
+    <a class="foot__logo" href="#top" aria-label="Apex Rehab — на початок сторінки">
+      <img src={logo.src} width="172" height="40" alt="Apex Rehab" loading="lazy" decoding="async" />
+    </a>
+    <div class="foot__col">
+      <a class="foot__phone num" href={links.tel}>{PHONE_DISPLAY}</a>
+      <p>{address.street}, {address.city}</p>
+    </div>
+    <ul class="foot__col foot__hours">
+      {hours.map((h) => <li><span class="muted">{h.days}</span> <span class="num">{h.time}</span></li>)}
+    </ul>
+    <ul class="foot__col foot__soon">
+      <li><FutureLink note={SOON}>Про центр</FutureLink></li>
+      <li><FutureLink note={SOON}>Статті</FutureLink></li>
+      <li><FutureLink note={SOON}>Політика конфіденційності</FutureLink></li>
+      <li><FutureLink note={SOON}>Російська версія</FutureLink></li>
+    </ul>
+  </div>
+  <div class="container foot__base">
+    <p class="small muted">© {year} Apex Rehab, центр фізичної реабілітації, Київ</p>
+  </div>
+</footer>
+
+<style>
+  .foot { padding-block: var(--section) var(--s-3); border-top: 1px solid var(--color-line); font-size: var(--fs-small); }
+  .foot__grid { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 3fr) minmax(0, 3fr) minmax(0, 3fr); gap: var(--s-4) var(--gap); align-items: start; }
+  .foot__logo { display: inline-flex; min-height: 44px; align-items: center; justify-self: start; }
+  .foot__logo img { width: 10.75rem; height: auto; }
+  .foot__col { display: grid; gap: var(--s-1); }
+  .foot__phone { font-weight: 600; font-size: var(--fs-body); text-decoration: none; min-height: 32px; display: inline-flex; align-items: center; justify-self: start; }
+  .foot__phone:hover { color: var(--color-accent); }
+  .foot__hours span:first-child { display: inline-block; min-width: 3.5rem; }
+  .foot__soon :global(.future-link) { min-height: 32px; }
+  .foot__base { margin-top: var(--s-5); padding-top: var(--s-3); border-top: 1px solid var(--color-line); }
+  @media (max-width: 63.99rem) {
+    .foot__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 47.99rem) {
+    .foot__grid { grid-template-columns: minmax(0, 1fr); gap: var(--s-3); }
+  }
+</style>

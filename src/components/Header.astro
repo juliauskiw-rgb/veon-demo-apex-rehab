@@ -1,0 +1,87 @@
+---
+import Icon from "./Icon.astro";
+import logo from "../assets/logo-apex.svg";
+import { nav, links, PHONE_DISPLAY } from "../data/clinic";
+---
+<header class="site-header" data-header data-rec="R-UX-03">
+  <div class="site-header__row container">
+    <a class="site-header__logo" href="#top" aria-label="Apex Rehab — на початок сторінки">
+      <img src={logo.src} width="190" height="44" alt="Apex Rehab" decoding="async" fetchpriority="high" />
+    </a>
+    <nav class="site-nav" id="site-nav" aria-label="Головне меню" data-nav>
+      <ul class="site-nav__list">
+        {nav.map((n) => <li><a class="site-nav__link" href={n.href}>{n.label}</a></li>)}
+      </ul>
+      <div class="site-nav__channels">
+        <p class="small muted">Записатися на консультацію</p>
+        <a class="site-nav__channel" href={links.tel}><Icon name="phone" /> <span>{PHONE_DISPLAY}</span></a>
+        <a class="site-nav__channel" href={links.telegram} target="_blank" rel="noopener"><Icon name="telegram" /> <span>Telegram</span></a>
+        <a class="site-nav__channel" href={links.viber}><Icon name="viber" /> <span>Viber</span></a>
+        <a class="site-nav__channel" href={links.whatsapp} target="_blank" rel="noopener"><Icon name="whatsapp" /> <span>WhatsApp</span></a>
+      </div>
+    </nav>
+    <div class="site-header__actions">
+      <a class="site-header__phone num" href={links.tel}>{PHONE_DISPLAY}</a>
+      <ul class="site-header__msg" aria-label="Месенджери">
+        <li><a href={links.telegram} target="_blank" rel="noopener" aria-label="Telegram"><Icon name="telegram" size={20} /></a></li>
+        <li><a href={links.viber} aria-label="Viber"><Icon name="viber" size={20} /></a></li>
+        <li><a href={links.whatsapp} target="_blank" rel="noopener" aria-label="WhatsApp"><Icon name="whatsapp" size={20} /></a></li>
+      </ul>
+      <a class="site-header__call" href={links.tel} aria-label={`Подзвонити ${PHONE_DISPLAY}`}><Icon name="phone" /></a>
+      <a class="btn btn--sm site-header__book" href="#contacts" data-book data-rec="R-UX-02">Записатися</a>
+      <button class="site-header__burger" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Відкрити меню" data-burger>
+        <Icon name="menu" class="i-open" /><Icon name="close" class="i-close" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: 50; background: var(--color-bg); border-bottom: 1px solid var(--color-line); }
+  .site-header__row { display: flex; align-items: center; gap: var(--s-3); min-height: var(--header-h); }
+  .site-header__logo { display: inline-flex; align-items: center; min-height: 44px; flex: none; border-radius: 2px; }
+  .site-header__logo img { width: clamp(9rem, 7.6rem + 3vw, 11.875rem); height: auto; }
+  .site-nav { margin-inline-start: auto; }
+  .site-nav__list { display: flex; gap: var(--s-3); }
+  .site-nav__link { display: inline-flex; white-space: nowrap; align-items: center; min-height: 44px; font-weight: 500; text-decoration: none; color: var(--color-text); text-underline-offset: 0.35em; text-decoration-thickness: 1px; transition: color var(--dur-fast) var(--ease-out); }
+  .site-nav__link:hover { color: var(--color-accent); text-decoration-line: underline; }
+  .site-nav__channels { display: none; }
+  .site-header__actions { display: flex; align-items: center; gap: var(--s-3); }
+  .site-header__phone { font-weight: 600; text-decoration: none; color: var(--color-text); min-height: 44px; display: inline-flex; align-items: center; white-space: nowrap; }
+  .site-header__phone:hover { color: var(--color-accent); }
+  .site-header__msg { display: flex; gap: 0; margin-inline-start: calc(-1 * var(--s-2)); }
+  @media (max-width: 1360px) { .site-header__msg { display: none; } }
+  .site-header__msg a { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; color: var(--color-accent); border-radius: var(--radius); transition: background-color var(--dur-fast) var(--ease-out); }
+  .site-header__msg a:hover { background: var(--color-surface); }
+  .site-header__call, .site-header__burger { display: none; }
+
+  /* below desktop: logo, call, burger; the menu opens as a panel */
+  @media (max-width: 74.99rem) {
+    .site-header__row { gap: var(--s-1); }
+    .site-header__actions { margin-inline-start: auto; gap: var(--s-1); }
+    .site-header__phone, .site-header__msg { display: none; }
+    .site-header__call, .site-header__burger { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border: 0; border-radius: var(--radius); background: transparent; color: var(--color-text); cursor: pointer; }
+    .site-header__call { color: var(--color-accent); }
+    .site-header__burger :global(.i-close) { display: none; }
+    .site-header__burger[aria-expanded="true"] :global(.i-open) { display: none; }
+    .site-header__burger[aria-expanded="true"] :global(.i-close) { display: block; }
+    .site-nav { position: absolute; inset: 100% 0 auto 0; margin: 0; background: var(--color-bg); border-bottom: var(--cross) solid var(--color-accent); padding: var(--s-2) var(--gutter) var(--s-4); max-height: calc(100dvh - var(--header-h)); overflow-y: auto; display: none; }
+    .site-nav.is-open { display: block; }
+    .site-nav__list { flex-direction: column; gap: 0; }
+    .site-nav__link { min-height: 56px; width: 100%; font-family: var(--font-display); font-size: var(--fs-h3); border-bottom: 1px solid var(--color-line); }
+    .site-nav__channels { display: grid; gap: var(--s-1); margin-top: var(--s-3); }
+    .site-nav__channel { display: flex; align-items: center; gap: var(--s-2); min-height: 52px; padding-inline: var(--s-2); border: 1px solid var(--color-line); border-radius: var(--radius); text-decoration: none; font-weight: 600; transition: background-color var(--dur-fast) var(--ease-out); }
+    .site-nav__channel:hover { background: var(--color-surface); }
+    .site-nav__channel :global(.icon) { color: var(--color-accent); }
+    /* without scripting the menu stays as a simple wrapped row */
+    :global(html:not(.js)) .site-header__burger { display: none; }
+    :global(html:not(.js)) .site-nav { position: static; display: block; padding: 0; border: 0; order: 3; width: 100%; }
+    :global(html:not(.js)) .site-header__row { flex-wrap: wrap; }
+    :global(html:not(.js)) .site-nav__list { flex-direction: row; flex-wrap: wrap; gap: 0 var(--s-2); }
+    :global(html:not(.js)) .site-nav__link { min-height: 44px; font-size: var(--fs-small); font-family: var(--font-body); border: 0; width: auto; }
+    :global(html:not(.js)) .site-nav__channels { display: none; }
+  }
+  @media (max-width: 47.99rem) {
+    .site-header__book { display: none; }
+  }
+</style>

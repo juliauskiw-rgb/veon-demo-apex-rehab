@@ -1,0 +1,82 @@
+---
+import FutureLink from "./FutureLink.astro";
+import { steps, SOON } from "../data/clinic";
+---
+<section id="approach" class="appr on-sand" aria-labelledby="appr-title">
+  <div class="container appr__grid">
+    <div class="appr__aside">
+      <h2 id="appr-title">Як проходить реабілітація</h2>
+      <p class="appr__intro">Кожен випадок індивідуальний, тому програму складаємо разом з вами: від першої консультації до вправ для дому.</p>
+      <dl class="appr__sessions">
+        <div><dt class="num">3–5</dt><dd>сеансів, коли стан гострий</dd></div>
+        <div><dt class="num">8–12</dt><dd>процедур, коли стан хронічний</dd></div>
+      </dl>
+      <p class="small appr__note">Орієнтир центру для мануальної терапії. Точну кількість лікар визначить після діагностики.</p>
+      <p class="appr__methods"><FutureLink note={SOON}>Усі методи лікування</FutureLink></p>
+    </div>
+
+    <ol class="path">
+      {steps.map((s, i) => (
+        <li class:list={["step", { "step--key": s.key }]} data-reveal style={`--reveal-delay:${i * 90}ms`}>
+          <span class="step__arm cross-bar" aria-hidden="true"></span>
+          <div class="step__body">
+            <span class="step__n num">{String(i + 1).padStart(2, "0")}</span>
+            <h3 class="step__title">{s.title}</h3>
+            <p class="step__text">{s.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .appr { background: var(--color-sand); color: var(--color-text); padding-block: var(--section); }
+  .appr__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--gap); align-items: start; }
+  .appr__aside { position: sticky; top: calc(var(--header-h) + var(--s-4)); display: grid; gap: var(--s-3); padding-right: var(--s-5); }
+  .appr__intro { font-size: var(--fs-lead); }
+  .appr__sessions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3); margin: var(--s-2) 0 0; }
+  .appr__sessions dt { font-family: var(--font-display); font-size: var(--fs-price); line-height: 1; font-weight: var(--w-display); }
+  .appr__sessions dd { margin: var(--s-1) 0 0; max-width: 14ch; }
+  .appr__note { max-width: 40ch; }
+  .appr__methods { font-weight: 600; }
+
+  .path { position: relative; display: grid; gap: var(--s-4); padding-left: calc(var(--cross) + var(--s-5)); }
+  .path::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: var(--cross); background: var(--color-accent); }
+  .step { position: relative; }
+  .step__arm { position: absolute; left: calc(-1 * var(--s-5)); top: 0.9rem; width: calc(var(--s-5) - var(--s-2)); height: var(--cross); transform-origin: left center; }
+  .step__body { display: grid; grid-template-columns: 3.5rem minmax(0, 1fr); column-gap: var(--s-2); row-gap: var(--s-1); }
+  .step__n { grid-row: 1 / 3; font-weight: 600; padding-top: 0.45rem; }
+  .step__title { font-size: var(--fs-h3); }
+  .step__text { max-width: 48ch; }
+  .step--key .step__body { background: var(--color-bg); padding: var(--s-4); margin-left: calc(-1 * var(--s-2)); }
+  .step--key .step__title { font-size: var(--fs-h2); line-height: 1.1; }
+  .step--key .step__text { font-size: var(--fs-lead); }
+  .step--key .step__arm { width: calc(var(--s-5) - var(--s-2)); top: var(--s-5); }
+
+  /* "shoulders of the path": the arm grows from the spine, the step fades in, once */
+  :global(.js) .step[data-reveal]:not(.is-visible) { transform: none; opacity: 0.001; }
+  :global(.js) .step[data-reveal]:not(.is-visible) .step__arm { transform: scaleX(0); }
+  .step[data-reveal] { transition: opacity var(--dur) var(--ease-out); transition-delay: var(--reveal-delay, 0ms); }
+  .step__arm { transition: transform var(--dur) var(--ease-out); transition-delay: var(--reveal-delay, 0ms); }
+
+  @media (max-width: 63.99rem) {
+    .appr__grid { grid-template-columns: minmax(0, 1fr); gap: var(--s-5); }
+    .appr__aside { position: static; padding-right: 0; }
+  }
+  @media (max-width: 47.99rem) {
+    .path { padding-left: calc(var(--cross) + var(--s-4)); gap: var(--s-3); }
+    .step__arm { left: calc(-1 * var(--s-4)); width: calc(var(--s-4) - var(--s-1)); }
+    .step--key .step__arm { width: calc(var(--s-4) - var(--s-1)); top: var(--s-4); }
+    .step__body { grid-template-columns: minmax(0, 1fr); }
+    .step__n { grid-row: auto; padding-top: 0; }
+    .step--key .step__body { padding: var(--s-3); margin-left: 0; }
+    .step--key .step__title { font-size: var(--fs-h3); }
+    .step[data-reveal] { transition-delay: 0ms; }
+    .step__arm { transition-delay: 0ms; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .step[data-reveal]:not(.is-visible) { opacity: 1; }
+    :global(.js) .step[data-reveal]:not(.is-visible) .step__arm { transform: none; }
+  }
+</style>

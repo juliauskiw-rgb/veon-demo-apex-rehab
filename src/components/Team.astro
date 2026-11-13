@@ -1,0 +1,82 @@
+---
+import { Image } from "astro:assets";
+import FutureLink from "./FutureLink.astro";
+import { team, SOON } from "../data/clinic";
+import slobodianiuk from "../assets/team/slobodianiuk.webp";
+import zavertylenko from "../assets/team/zavertylenko.webp";
+import iehorov from "../assets/team/iehorov.webp";
+import semenova from "../assets/team/semenova.webp";
+
+const photos: Record<string, ImageMetadata> = { slobodianiuk, zavertylenko, iehorov, semenova };
+const [lead, ...rest] = team;
+---
+<section id="team" class="team section" data-rec="R-UX-10,S-R016" aria-labelledby="team-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="team-title">Фахівці центру</h2>
+      <p>Центр заснували медики. У команді лікарі, фізичні терапевти й лікар-психолог.</p>
+    </div>
+
+    <ul class="team__grid">
+      <li class="doc doc--lead">
+        <Image class="doc__photo" src={photos[lead.key]} widths={[240, 338]} sizes="(max-width: 47.99rem) 72vw, 338px" alt={`${lead.name}, ${lead.role.toLowerCase()}`} loading="lazy" decoding="async" />
+        <div class="doc__text">
+          <h3 class="doc__name">{lead.name}</h3>
+          <p class="doc__role">{lead.role}</p>
+          <p class="doc__years small muted">{lead.years}</p>
+          <p class="doc__why">Поєднує медичну психологію і фізичну реабілітацію: саме так працює центр.</p>
+          <p class="doc__more small"><FutureLink note={SOON}>Профіль фахівця</FutureLink></p>
+        </div>
+      </li>
+      {rest.map((d) => (
+        <li class="doc">
+          <Image class="doc__photo" src={photos[d.key]} widths={[240, 338]} sizes="(max-width: 47.99rem) 72vw, 140px" alt={`${d.name}, ${d.role.toLowerCase()}`} loading="lazy" decoding="async" />
+          <div class="doc__text">
+            <h3 class="doc__name">{d.name}</h3>
+            <p class="doc__role">{d.role}</p>
+            <p class="doc__years small muted">{d.years}</p>
+            <p class="doc__more small"><FutureLink note={SOON}>Профіль фахівця</FutureLink></p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* asymmetry: the lead specialist large on the left, three in a column on the right */
+  .team__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-rows: repeat(3, auto); gap: 0 var(--s-5); }
+  .doc { display: grid; grid-template-columns: 8.75rem minmax(0, 1fr); gap: var(--s-3); align-items: center; padding-block: var(--s-3); border-bottom: 1px solid var(--color-line); }
+  .doc:nth-child(2) { border-top: 1px solid var(--color-line); }
+  .doc--lead { grid-row: 1 / 4; grid-template-columns: minmax(0, 21.125rem) minmax(0, 1fr); align-items: end; align-self: start; gap: var(--s-4); padding: 0; border: 0; background: var(--color-surface); }
+  .doc__photo { width: 100%; height: auto; aspect-ratio: 338 / 480; object-fit: cover; background: var(--color-surface); }
+  .doc--lead .doc__photo { background: transparent; }
+  .doc__text { display: grid; gap: var(--s-1); align-content: center; }
+  .doc--lead .doc__text { padding: var(--s-4) var(--s-4) var(--s-4) 0; align-content: end; }
+  .doc__name { font-size: var(--fs-h3); }
+  .doc--lead .doc__name { font-size: var(--fs-h3); }
+  .doc__role { font-weight: 500; }
+  .doc__why { margin-top: var(--s-2); padding-top: var(--s-2); border-top: var(--cross) solid var(--color-accent); max-width: 30ch; }
+  .doc__more { margin-top: var(--s-1); }
+
+  @media (max-width: 74.99rem) {
+    .doc--lead { grid-template-columns: minmax(0, 1fr); align-items: start; }
+    .doc--lead .doc__photo { max-width: 21.125rem; }
+    .doc--lead .doc__text { padding: 0 var(--s-4) var(--s-4); }
+  }
+  @media (max-width: 63.99rem) {
+    .team__grid { gap: 0 var(--s-4); }
+    .doc { grid-template-columns: 6.5rem minmax(0, 1fr); }
+  }
+
+  /* phone: a horizontal rail with snap and a visible tail of the next card */
+  @media (max-width: 47.99rem) {
+    .team__grid { display: flex; gap: var(--s-2); overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: calc(-1 * var(--gutter)); padding: 0 var(--gutter) var(--s-2); scroll-padding-inline: var(--gutter); overscroll-behavior-x: contain; scrollbar-width: thin; }
+    .doc, .doc--lead { flex: 0 0 72%; scroll-snap-align: start; grid-template-columns: minmax(0, 1fr); align-items: start; align-content: start; gap: var(--s-2); padding: 0 0 var(--s-2); border: 0; background: transparent; }
+    .doc:nth-child(2) { border: 0; }
+    .doc--lead .doc__photo { max-width: none; }
+    .doc--lead .doc__text { padding: 0; }
+    .doc--lead .doc__name { font-size: var(--fs-h3); }
+    .doc__why { display: none; }
+  }
+</style>

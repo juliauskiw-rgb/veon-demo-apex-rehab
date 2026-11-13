@@ -1,0 +1,25 @@
+---
+import Base from "../layouts/Base.astro";
+import logo from "../assets/logo-apex.svg";
+import Footer from "../components/Footer.astro";
+import { links, PHONE_DISPLAY } from "../data/clinic";
+---
+<Base lang="uk" title="Сторінку не знайдено — Apex Rehab" description="Сторінку не знайдено. Перейдіть на головну сторінку Apex Rehab або зателефонуйте нам.">
+  <header class="container nf__head" slot="header"><a href="/" aria-label="Apex Rehab — на головну"><img src={logo.src} width="190" height="44" alt="Apex Rehab" /></a></header>
+  <section class="nf container" aria-labelledby="nf-title">
+    <h1 id="nf-title">Такої сторінки немає</h1>
+    <p>Можливо, адреса змінилася. Поверніться на головну або зателефонуйте: {PHONE_DISPLAY}.</p>
+    <div class="nf__actions">
+      <a class="btn" href="/">На головну</a>
+      <a class="tlink" href={links.tel}>Подзвонити</a>
+    </div>
+  </section>
+  <Footer slot="footer" />
+</Base>
+
+<style>
+  .nf__head { display: flex; align-items: center; min-height: var(--header-h); }
+  .nf__head a { display: inline-flex; min-height: 44px; align-items: center; }
+  .nf { display: grid; gap: var(--s-3); padding-block: var(--section); }
+  .nf__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); }
+</style>

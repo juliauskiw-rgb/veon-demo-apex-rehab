@@ -1,0 +1,51 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Conditions from "../components/Conditions.astro";
+import Approach from "../components/Approach.astro";
+import Prices from "../components/Prices.astro";
+import Team from "../components/Team.astro";
+import Reviews from "../components/Reviews.astro";
+import Contacts from "../components/Contacts.astro";
+import Footer from "../components/Footer.astro";
+import BookSheet from "../components/BookSheet.astro";
+import MobileBar from "../components/MobileBar.astro";
+import { links, PHONE_E164 } from "../data/clinic";
+
+const title = "Фізична реабілітація в Києві — Apex Rehab, Скоропадського 9А";
+const description = "Центр фізичної реабілітації в Києві: хребет, суглоби, м'язи, відновлення після травм і операцій, психологічна підтримка. Консультація від 500 грн.";
+
+// JSON-LD: only facts from client.json; no geo (coordinates not in client data), no rating.
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  name: "Apex Rehab",
+  description,
+  telephone: PHONE_E164,
+  email: "apexrehability@gmail.com",
+  address: { "@type": "PostalAddress", streetAddress: "вул. Павла Скоропадського, 9А", addressLocality: "Київ", addressCountry: "UA" },
+  hasMap: links.map,
+  medicalSpecialty: "PhysicalTherapy",
+  openingHoursSpecification: [
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "08:00", closes: "20:00" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Saturday", "Sunday"], opens: "10:00", closes: "20:00" },
+  ],
+  sameAs: [links.instagram, links.facebook, links.telegram],
+};
+---
+<Base lang="uk" title={title} description={description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <Header slot="header" />
+  <Hero />
+  <Conditions />
+  <Approach />
+  <Prices />
+  <Team />
+  <Reviews />
+  <Contacts />
+  <Footer slot="footer" />
+  <BookSheet slot="footer" />
+  <MobileBar slot="footer" />
+</Base>
+<script src="../scripts/ui.ts"></script>

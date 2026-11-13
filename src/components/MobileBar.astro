@@ -1,0 +1,24 @@
+---
+import Icon from "./Icon.astro";
+import { links } from "../data/clinic";
+---
+<div class="mbar" data-mbar data-rec="R-UX-04">
+  <a class="mbar__btn mbar__btn--call" href={links.tel}><Icon name="phone" size={20} /> <span>Подзвонити</span></a>
+  <a class="mbar__btn mbar__btn--write" href="#contacts" data-book="write"><Icon name="telegram" size={20} /> <span>Написати</span></a>
+</div>
+
+<style>
+  .mbar { display: none; }
+  @media (max-width: 47.99rem) {
+    :global(body) { padding-bottom: var(--bar-h); }
+    .mbar { position: fixed; inset: auto 0 0 0; z-index: 40; display: grid; grid-template-columns: 1fr 1fr; height: var(--bar-h); background: var(--color-bg); border-top: 1px solid var(--color-line); padding-bottom: env(safe-area-inset-bottom); transition: transform var(--dur-fast) var(--ease-out); }
+    .mbar.is-hidden { transform: translateY(110%); }
+    .mbar__btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-weight: 600; text-decoration: none; color: var(--color-accent); transition: background-color var(--dur-fast) var(--ease-out); }
+    .mbar__btn--call { background: var(--color-accent); color: var(--color-on-accent); }
+    .mbar__btn--call:active { background: var(--color-accent-strong); }
+    .mbar__btn--write:active { background: var(--color-surface); }
+    .mbar__btn:focus-visible { outline-offset: -4px; }
+    .mbar__btn--call:focus-visible { outline: 3px solid var(--color-on-accent); }
+  }
+  @media (prefers-reduced-motion: reduce) { .mbar { transition: none; } }
+</style>

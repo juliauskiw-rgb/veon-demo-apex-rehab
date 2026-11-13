@@ -1,0 +1,82 @@
+/* Hallmark · shape: shield-fields · genre: editorial · theme: custom · job: book · idea: "Щит Apex як план лікування" · vibe: "камерно, тепло, точно, багряний хрест" · paper: #FFFFFF · accent: #A32523 · display: Piazzolla · body: Onest · hero: багряне поле з H1 і плечем хреста до ціни та адреси · nav: біла липка, 5 якорів + телефон + запис · footer: світлий компактний · imagery: client photos · signature: багряний хрест щита як сітка сторінки · axes: light/roman-serif/warm · posture: committed · surface: absolute · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: imagery, only 4 client portraits at 338x480; the page leans on the cross grid and type, photos only in team */
+/* Hallmark · waive 7b · #FFFFFF is listed in the veon-concept colors of design/concept.md · Apex Rehab paper and the ink on the crimson shield field are the brand white from the logo, approved in the concept */
+/* Hallmark · waive 39b · a.cta__phone is the phone number set in Piazzolla at price size, not a button · concept §8.2 asks for the Apex Rehab phone large in the closing contacts field; the four channel tiles beside it are the controls */
+/* Hallmark · waive 23 · crimson covers ~65 % of the first screen · committed posture of design/concept.md §5: the brand shield field is the whole idea of the page, one accent, no second colour */
+/* Hallmark · waive 44c · the stone column is a full-height field aligned with the crimson one, not a floating visual; text and column share the cross line; price enlarged to fill it */
+/* Line 1 of this file is the Hallmark stamp (docs/process/hallmark.md); waivers go right below it. */
+/* Apex Rehab tokens — only from design/concept.md §8.3–8.5, §8.13 (veon-concept colors and fonts). */
+:root {
+  /* colour */
+  --c-crimson: #A32523;        /* поле / primary, from the logo shield */
+  --c-crimson-deep: #86201E;   /* hover / active */
+  --c-white: #FFFFFF;
+  --c-stone: #F3EEE8;          /* surface */
+  --c-sand: #D6B89C;           /* brand secondary, only the approach field */
+  --c-graphite: #3C3C3B;       /* text */
+  --c-muted: #6A645D;          /* secondary text on white / stone */
+
+  --color-bg: var(--c-white);
+  --color-surface: var(--c-stone);
+  --color-text: var(--c-graphite);
+  --color-muted: var(--c-muted);
+  --color-accent: var(--c-crimson);
+  --color-accent-strong: var(--c-crimson-deep);
+  --color-accent-ink: var(--c-white);
+  --color-on-accent: var(--color-accent-ink);
+  --color-sand: var(--c-sand);
+  --color-line: color-mix(in srgb, var(--c-graphite) 16%, transparent);
+  --color-line-on-accent: color-mix(in srgb, var(--c-white) 34%, transparent);
+  --color-scrim: color-mix(in srgb, var(--c-graphite) 55%, transparent);
+
+  /* type */
+  --font-display: "Piazzolla", "Piazzolla Fallback", Georgia, serif;
+  --font-body: "Onest", "Onest Fallback", system-ui, sans-serif;
+  --fs-h1: clamp(2.375rem, 1.493rem + 3.619vw, 4.75rem);    /* 38 → 76 */
+  --fs-h2: clamp(1.875rem, 1.457rem + 1.714vw, 3rem);       /* 30 → 48 */
+  --fs-h3: clamp(1.375rem, 1.189rem + 0.762vw, 1.875rem);   /* 22 → 30 */
+  --fs-price: clamp(2.5rem, 2.129rem + 1.524vw, 3.5rem);    /* 40 → 56 */
+  --fs-price-row: clamp(1.75rem, 1.471rem + 1.143vw, 2.5rem); /* 28 → 40 */
+  --fs-lead: clamp(1.125rem, 1.054rem + 0.286vw, 1.3125rem);/* 18 → 21 */
+  --fs-body: clamp(1.0625rem, 1.039rem + 0.095vw, 1.125rem);/* 17 → 18 */
+  --fs-small: clamp(0.875rem, 0.852rem + 0.095vw, 0.9375rem);/* 14 → 15 */
+  --lh-tight: 1.04;
+  --lh-head: 1.12;
+  --lh-body: 1.55;
+  --w-display: 560;
+  --w-display-strong: 600;
+
+  /* space: rhythm of 8 */
+  --s-1: 0.5rem;   /* 8 */
+  --s-2: 1rem;     /* 16 */
+  --s-3: 1.5rem;   /* 24 */
+  --s-4: 2.5rem;   /* 40 */
+  --s-5: 4rem;     /* 64 */
+  --s-6: 6rem;     /* 96 */
+  --s-7: 9rem;     /* 144 */
+  --section: clamp(4.5rem, 2.829rem + 6.857vw, 9rem);       /* 72 → 144 */
+  --gutter: clamp(1.25rem, 0.786rem + 1.905vw, 2.5rem);     /* 20 → 40 */
+  --gap: 1.5rem;
+  --container: 80rem;                                       /* 1280 */
+  --space: var(--gutter);
+
+  /* the cross of the shield */
+  --cross: clamp(0.5rem, 0.407rem + 0.381vw, 0.75rem);      /* 8 → 12 */
+
+  /* shape */
+  --radius: 4px;
+  --btn-h: 3.25rem;     /* 52 */
+  --btn-h-sm: 3rem;     /* 48 */
+  --header-h: 4.5rem;   /* 72; 56 on phones, set below */
+  --bar-h: 4rem;        /* 64, phone bottom bar */
+
+  /* motion */
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --dur: 450ms;
+  --dur-fast: 200ms;
+  --dur-tab: 250ms;
+  --dur-cross: 700ms;
+}
+@media (max-width: 47.99rem) {
+  :root { --header-h: 3.5rem; --dur-cross: 500ms; }
+}

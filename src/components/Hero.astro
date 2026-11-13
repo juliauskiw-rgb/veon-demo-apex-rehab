@@ -1,0 +1,110 @@
+---
+import Icon from "./Icon.astro";
+import { conditions, links, PHONE_DISPLAY, address, hours } from "../data/clinic";
+---
+<section id="hero" class="hero" data-rec="R-UX-05,R-UX-06,R-SP-01,R-UX-15,G-R003,G-R004,MA-R002,R-SP-03,R-SP-04,R-SP-06" aria-labelledby="hero-title">
+  <div class="hero__field on-accent">
+    <div class="hero__field-in">
+      <h1 id="hero-title">Фізична реабілітація з психологічною підтримкою в центрі Києва</h1>
+      <p class="hero__lead">Поєднуємо фізичне відновлення з роботою психолога, щоб повернути вам свободу руху.</p>
+      <div class="hero__actions">
+        <a class="btn btn--inverse hero__cta" href="#contacts" data-book data-rec="R-UX-02">Записатися на консультацію <Icon name="arrow" class="arrow" /></a>
+        <a class="tlink hero__phone num" href={links.tel}><Icon name="phone" size={20} /> <span>{PHONE_DISPLAY}</span></a>
+      </div>
+      <div class="hero__dirs">
+        <p class="small hero__dirs-label" id="dirs-label">З чим до нас приходять:</p>
+        <ul class="hero__dirs-list" aria-labelledby="dirs-label">
+          {conditions.map((c) => <li><a href={`#${c.id}`}>{c.short}</a></li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="hero__side" role="group" aria-label="Ціна консультації та адреса">
+    <div class="hero__price">
+      <p class="small muted">Консультація фізичного терапевта</p>
+      <p class="hero__price-num num"><span class="hero__m">Консультація </span><span class="hero__from">від</span> 500 <span class="hero__cur">грн</span></p>
+    </div>
+    <span class="cross-bar hero__arm" aria-hidden="true"></span>
+    <div class="hero__place">
+      <p class="hero__addr"><span class="hero__addr-full">{address.street}, {address.city}</span><span class="hero__addr-short">{address.short}</span></p>
+      <ul class="hero__hours small">
+        {hours.map((h) => <li><span>{h.days}</span> <span class="num">{h.time}</span></li>)}
+      </ul>
+      <a class="tlink hero__route" href={links.map} target="_blank" rel="noopener">Прокласти маршрут <Icon name="arrow" class="arrow" /></a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* 4 tracks: left gutter | 8 cols | 4 cols | right gutter. The crimson field bleeds to the left edge, the stone to the right. */
+  .hero {
+    --c8: min(calc((100% - 2 * var(--gutter)) * 8 / 12), calc(var(--container) * 8 / 12));
+    --c4: min(calc((100% - 2 * var(--gutter)) * 4 / 12), calc(var(--container) * 4 / 12));
+    display: grid;
+    grid-template-columns: minmax(var(--gutter), 1fr) var(--c8) var(--c4) minmax(var(--gutter), 1fr);
+    min-height: min(calc(100svh - var(--header-h)), 52rem);
+  }
+  .hero__field { grid-column: 1 / 3; display: grid; grid-template-columns: subgrid; background: var(--color-accent); color: var(--color-on-accent); }
+  .hero__field-in { grid-column: 2; display: flex; flex-direction: column; justify-content: center; gap: var(--s-3); padding: var(--s-5) var(--s-5) var(--s-5) 0; }
+  .hero h1 { max-width: 17ch; text-wrap: balance; }
+  .hero__lead { font-size: var(--fs-lead); max-width: 36ch; }
+  .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-4); margin-top: var(--s-1); }
+  .hero__phone { color: inherit; }
+  .hero__dirs { display: grid; gap: var(--s-1); margin-top: var(--s-2); padding-top: var(--s-3); border-top: 1px solid var(--color-line-on-accent); }
+  .hero__dirs-list { display: flex; flex-wrap: wrap; gap: 0 var(--s-3); }
+  .hero__dirs-list a { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--font-display); font-size: var(--fs-h3); font-weight: var(--w-display); color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.22em; text-decoration-color: var(--color-line-on-accent); transition: text-decoration-color var(--dur-fast) var(--ease-out); }
+  .hero__dirs-list a:hover { text-decoration-color: currentColor; }
+
+  .hero__side { grid-column: 3 / 5; display: grid; grid-template-columns: subgrid; grid-template-rows: 1fr auto 1fr; background: var(--color-surface); }
+  .hero__price { grid-column: 1; grid-row: 1; align-content: end; }
+  .hero__arm { grid-column: 1 / -1; grid-row: 2; height: var(--cross); transform-origin: left center; animation: arm-grow var(--dur-cross) var(--ease-out) both; }
+  .hero__place { grid-column: 1; grid-row: 3; align-content: start; }
+  .hero__price, .hero__place { display: grid; gap: var(--s-2); padding: var(--s-5) 0 var(--s-5) var(--s-4); }
+  .hero__price .small { font-size: var(--fs-body); font-weight: 600; color: var(--color-text); }
+  .hero__addr { font-size: var(--fs-h3); font-family: var(--font-display); }
+  .hero__price-num { font-family: var(--font-display); font-size: clamp(3.5rem, 1.2rem + 5.4vw, 6.5rem); line-height: 0.95; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; font-weight: var(--w-display); color: var(--color-accent); white-space: nowrap; }
+  .hero__from, .hero__cur { font-size: 0.3em; font-weight: 500; color: var(--color-text); }
+  .hero__m, .hero__addr-short { display: none; }
+  .hero__addr { font-weight: 600; font-size: var(--fs-lead); line-height: 1.35; }
+  .hero__hours { display: grid; gap: 0.15rem; color: var(--color-muted); }
+  .hero__hours span:first-child { display: inline-block; min-width: 3.5rem; }
+
+  @keyframes arm-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  /* tablet: field over stone, the shoulder of the cross runs between them */
+  @media (max-width: 63.99rem) {
+    .hero { grid-template-columns: var(--gutter) minmax(0, 1fr) minmax(0, 1fr) var(--gutter); min-height: 0; }
+    .hero__field { grid-column: 1 / -1; }
+    .hero__field-in { grid-column: 2 / 4; padding: var(--s-5) 0; }
+    .hero__side { grid-column: 1 / -1; grid-template-rows: auto auto; }
+    .hero__arm { grid-row: 1; grid-column: 1 / -1; }
+    .hero__price { grid-row: 2; grid-column: 2; padding: var(--s-4) var(--s-3) var(--s-4) 0; align-content: start; }
+    .hero__place { grid-row: 2; grid-column: 3; padding: var(--s-4) 0; }
+  }
+
+  /* phone: its own composition: H1, one sentence, full-width button; one stone row with price and address */
+  @media (max-width: 47.99rem) {
+    .hero__field-in { padding: var(--s-4) 0; gap: var(--s-2); }
+    .hero h1 { max-width: none; }
+    .hero__lead { font-size: var(--fs-body); }
+    .hero__phone { display: none; }
+    .hero__dirs { margin-top: 0; padding-top: var(--s-1); }
+    .hero__dirs-label { display: none; }
+    .hero__dirs-list { gap: 0 var(--s-2); }
+    .hero__dirs-list a { min-height: 44px; font-family: var(--font-body); font-size: var(--fs-small); font-weight: 600; }
+    .hero__cta { width: 100%; }
+    .hero__side { grid-template-rows: auto auto auto; }
+    .hero__price { grid-column: 2 / 4; grid-row: 2; padding: var(--s-2) 0 0; gap: 0; }
+    .hero__price .small { display: none; }
+    .hero__price-num { font-size: var(--fs-h3); }
+    .hero__m { display: inline; }
+    .hero__m, .hero__from, .hero__cur { font: 600 var(--fs-body) / 1.3 var(--font-body); color: var(--color-text); }
+    .hero__place { grid-column: 2 / 4; grid-row: 3; padding: 0.25rem 0 var(--s-2); gap: 0; }
+    .hero__addr { font-size: var(--fs-body); font-weight: 500; }
+    .hero__addr-full, .hero__hours, .hero__route { display: none; }
+    .hero__addr-short { display: inline; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero__arm { animation: none; }
+  }
+</style>

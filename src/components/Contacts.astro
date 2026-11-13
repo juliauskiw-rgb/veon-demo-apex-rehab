@@ -1,0 +1,88 @@
+---
+import Icon from "./Icon.astro";
+import { links, PHONE_DISPLAY, address, hours } from "../data/clinic";
+---
+<section id="contacts" class="cta" data-rec="R-UX-16,R-UX-02,S-R013" aria-labelledby="cta-title">
+  <div class="cta__field on-accent">
+    <div class="cta__in">
+      <h2 id="cta-title">Контакти та запис</h2>
+      <p class="cta__lead">Запишіться на консультацію зручним способом: зателефонуйте або напишіть у месенджер.</p>
+      <a class="cta__phone num" href={links.tel}>{PHONE_DISPLAY}</a>
+      <ul class="channels">
+        <li><a class="channel" href={links.tel}><Icon name="phone" /><span>Подзвонити</span></a></li>
+        <li><a class="channel" href={links.telegram} target="_blank" rel="noopener"><Icon name="telegram" /><span>Telegram</span></a></li>
+        <li><a class="channel" href={links.viber}><Icon name="viber" /><span>Viber</span></a></li>
+        <li><a class="channel" href={links.whatsapp} target="_blank" rel="noopener"><Icon name="whatsapp" /><span>WhatsApp</span></a></li>
+      </ul>
+      <ul class="cta__more">
+        <li><a class="cta__link" href={links.mail}><Icon name="mail" size={20} /><span>{links.email}</span></a></li>
+        <li><a class="cta__link" href={links.instagram} target="_blank" rel="noopener"><Icon name="instagram" size={20} /><span>Instagram</span></a></li>
+        <li><a class="cta__link" href={links.facebook} target="_blank" rel="noopener"><Icon name="facebook" size={20} /><span>Facebook</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="cta__side">
+    <span class="cross-bar cta__arm" aria-hidden="true"></span>
+    <div class="cta__place">
+      <h3 class="cta__place-title">Як нас знайти</h3>
+      <address class="cta__addr">{address.street}<br />{address.city}</address>
+      <dl class="cta__hours">
+        {hours.map((h) => <div><dt>{h.days}</dt><dd class="num">{h.time}</dd></div>)}
+      </dl>
+      <a class="tlink cta__route" href={links.map} target="_blank" rel="noopener"><Icon name="pin" size={20} /> <span>Прокласти маршрут</span> <Icon name="arrow" class="arrow" /></a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* closing mirror of the first screen: crimson field to the left edge, stone with the cross shoulder to the right */
+  .cta {
+    --c8: min(calc((100% - 2 * var(--gutter)) * 8 / 12), calc(var(--container) * 8 / 12));
+    --c4: min(calc((100% - 2 * var(--gutter)) * 4 / 12), calc(var(--container) * 4 / 12));
+    display: grid;
+    grid-template-columns: minmax(var(--gutter), 1fr) var(--c8) var(--c4) minmax(var(--gutter), 1fr);
+  }
+  .cta__field { grid-column: 1 / 3; display: grid; grid-template-columns: subgrid; background: var(--color-accent); color: var(--color-on-accent); }
+  .cta__in { grid-column: 2; display: grid; gap: var(--s-3); padding: var(--section) var(--s-5) var(--section) 0; }
+  .cta__lead { font-size: var(--fs-lead); max-width: 40ch; }
+  .cta__phone { justify-self: start; font-family: var(--font-display); font-size: var(--fs-price); line-height: 1.05; font-weight: var(--w-display); color: inherit; text-decoration: none; white-space: nowrap; border-bottom: 1px solid var(--color-line-on-accent); transition: border-color var(--dur-fast) var(--ease-out); }
+  .cta__phone:hover { border-bottom-color: currentColor; }
+  .channels { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-1); margin-top: var(--s-2); }
+  .channel { display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: var(--s-3); min-height: 7rem; padding: var(--s-3); border: 1px solid var(--color-line-on-accent); border-radius: var(--radius); color: inherit; text-decoration: none; font-weight: 600; transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out); }
+  .channel:hover { background: var(--color-on-accent); color: var(--color-accent); }
+  .channel:active { transform: scale(0.98); }
+  .cta__more { display: flex; flex-wrap: wrap; gap: 0 var(--s-4); margin-top: var(--s-1); }
+  .cta__link { display: inline-flex; align-items: center; gap: var(--s-1); min-height: 44px; color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; text-decoration-color: var(--color-line-on-accent); }
+  .cta__link:hover { text-decoration-color: currentColor; }
+
+  .cta__side { grid-column: 3 / 5; display: grid; grid-template-columns: subgrid; grid-template-rows: 1fr auto 1fr; background: var(--color-surface); }
+  .cta__arm { grid-column: 1 / -1; grid-row: 2; height: var(--cross); }
+  .cta__place { grid-column: 1; grid-row: 3; display: grid; gap: var(--s-2); align-content: start; padding: var(--s-5) 0 var(--s-5) var(--s-4); }
+  .cta__addr { font-style: normal; font-weight: 600; font-size: var(--fs-lead); line-height: 1.35; }
+  .cta__hours { display: grid; gap: 0.2rem; margin: 0; }
+  .cta__hours div { display: flex; gap: var(--s-2); }
+  .cta__hours dt { min-width: 3.5rem; color: var(--color-muted); }
+  .cta__hours dd { margin: 0; }
+  .cta__route { color: var(--color-accent); }
+
+  @media (max-width: 74.99rem) {
+    .channels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .channel { min-height: 5rem; flex-direction: row; align-items: center; justify-content: flex-start; gap: var(--s-2); }
+  }
+  @media (max-width: 63.99rem) {
+    .cta { grid-template-columns: var(--gutter) minmax(0, 1fr) var(--gutter); }
+    .cta__field { grid-column: 1 / -1; }
+    .cta__in { grid-column: 2; padding: var(--s-6) 0 var(--s-5); }
+    .cta__side { grid-column: 1 / -1; grid-template-rows: auto auto; }
+    .cta__arm { grid-row: 1; }
+    .cta__place { grid-column: 2; grid-row: 2; padding: var(--s-4) 0; }
+  }
+  @media (max-width: 47.99rem) {
+    .cta__in { padding: var(--s-5) 0 var(--s-4); }
+    .cta__phone { font-size: min(var(--fs-h2), 8.4vw); }
+    .channel { min-height: 64px; padding: var(--s-2); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .channel:active { transform: none; }
+  }
+</style>
